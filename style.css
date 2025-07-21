@@ -7,16 +7,20 @@
 
 /* Body */
 body {
-  background-color: #000;
   height: 100vh;
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(135deg, #1a0033, #004466, #00bfff);
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'Orbitron', sans-serif;
-  overflow: hidden;
-  position: relative;
+  overflow: auto;
+  color: #e0f7ff;
 }
+
 
 #homepage-container {
   text-align: center;
@@ -26,25 +30,25 @@ body {
 
 /* IGRIS Title */
 .igris-name {
-  color: #f2f2f2;
+  color: #e0f7ff;
   font-size: 6rem;
-  letter-spacing: 12px;
   text-align: center;
   text-shadow:
-    0 0 5px #ff0000aa,
-    0 0 15px #ff0000cc,
-    0 0 30px #ff3300cc,
-    0 0 60px #ff6600cc;
+    0 0 5px #a64aff,
+    0 0 15px #0099ff,
+    0 0 30px #00ccff,
+    0 0 50px #3366ff;
 }
+
 
 /* Start Button */
 .arise-btn {
   margin-top: 5rem;
   padding: 14px 40px;
   font-size: 1.3rem;
-  color: #fff;
+  color: #72cac3;
   background: transparent;
-  border: 2px solid #ff3300;
+  border: 1px solid #72cac3;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -53,15 +57,15 @@ body {
 }
 
 .arise-btn:hover {
-  background-color: #ff3300;
-  box-shadow: 0 0 10px #ff3300, 0 0 40px #ff6600;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(195, 0, 255, 0.5);
 }
 
 /* Animations */
 @keyframes flicker {
-  0% { opacity: 1; text-shadow: 0 0 10px #ff1a1a55; }
-  50% { opacity: 0.9; text-shadow: 0 0 30px #ff6600aa; }
-  100% { opacity: 1; text-shadow: 0 0 15px #ff1a1a; }
+  0% { opacity: 1; text-shadow: 0 0 10px #4d1e1e55; }
+  50% { opacity: 0.9; text-shadow: 0 0 30px #47250eaa; }
+  100% { opacity: 1; text-shadow: 0 0 15px #271044; }
 }
 
 @keyframes scaleIn {
@@ -86,6 +90,32 @@ body {
   }
 }
 
-#Ziv {
-  color: rgb(128, 15, 0);
+#hud-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  width: 90vw;
+  max-width: 1200px;
+  z-index: 2;
 }
+
+.widget {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12x);
+  padding: 20px;
+  color: #72cac3;
+  font-size: 1.2rem;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(39, 24, 65, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.widget:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(195, 0, 255, 0.5);
+}
+
