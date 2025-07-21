@@ -3,14 +3,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+}  
 
 /* Body */
 body {
   height: 100vh;
   margin: 0;
   font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(135deg, #1a0033, #004466, #00bfff);
+  background: linear-gradient(135deg, #000000, #0a0e41, #010030);
   background-size: 200% 200%;
   animation: gradientShift 10s ease infinite;
   display: flex;
@@ -34,9 +34,9 @@ body {
   font-size: 6rem;
   text-align: center;
   text-shadow:
-    0 0 5px #a64aff,
+    0 0 5px #a44aff94,
     0 0 15px #0099ff,
-    0 0 30px #00ccff,
+    0 0 30px #00ccff54,
     0 0 50px #3366ff;
 }
 
@@ -58,7 +58,7 @@ body {
 
 .arise-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(195, 0, 255, 0.5);
+  box-shadow: 0 0 20px rgb(131, 115, 136);
 }
 
 /* Animations */
@@ -107,15 +107,51 @@ body {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12x);
   padding: 20px;
-  color: #72cac3;
+  color: #e8f0ff;
+  text-shadow: 0 0 5px rgb(71, 169, 207);
   font-size: 1.2rem;
   text-align: center;
   box-shadow: 0 0 12px rgba(39, 24, 65, 0.3);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
+
+
 .widget:hover {
+  color: #2da2aa;
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(195, 0, 255, 0.5);
 }
 
+.description {
+  display: none;
+}
+
+/* Initial state: welcome screen is fully visible */
+.fade-out {
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+/* After fade-out + timeout: make it invisible and untouchable */
+.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Keyframes for HUD fade in + slide up effect */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HUD fade-in effect using animation */
+.fade-in {
+  animation: fadeInSlideUp 1s ease forwards;
+}
