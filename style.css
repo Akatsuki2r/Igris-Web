@@ -18,6 +18,12 @@ body {
   position: relative;
 }
 
+#homepage-container {
+  text-align: center;
+}
+
+
+
 /* IGRIS Title */
 .igris-name {
   color: #f2f2f2;
@@ -32,7 +38,7 @@ body {
 }
 
 /* Start Button */
-.start-btn {
+.arise-btn {
   margin-top: 5rem;
   padding: 14px 40px;
   font-size: 1.3rem;
@@ -43,9 +49,10 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   animation: fadeIn 3s ease-in-out forwards;
+  
 }
 
-.start-btn:hover {
+.arise-btn:hover {
   background-color: #ff3300;
   box-shadow: 0 0 10px #ff3300, 0 0 40px #ff6600;
 }
@@ -77,4 +84,8 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+#Ziv {
+  color: rgb(128, 15, 0);
 }
