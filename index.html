@@ -4,45 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Igris Core</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
 </head>
 <body>
-  <section id="welcome-screen">
-    <div id="homepage-container">  
-      <div class="igris-name">IGRIS</div>
-      <button class="arise-btn" id="arise-button">Arise</button>
-    </div>
-  </section>
+  <main>
+    <section id="welcome-screen" aria-label="Welcome screen">
+      <div id="homepage-container">  
+        <h1 class="igris-name" aria-label="Igris">IGRIS</h1>
+        <button class="arise-btn" id="arise-button" aria-label="Start Igris interface">
+          Arise
+        </button>
+      </div>
+    </section>
 
-  <div id="hud-container" class="hidden">
-    <div class="widget" id="focus-mode">
-      <h2>Focus Mode</h2>
-      <p class="description">Start your productivity session.</p>
-    </div>
+    <section class="hidden" id="hud-container" aria-label="Main dashboard">
+      <div class="widget" id="focus-mode" tabindex="0" role="button">
+        <h2>Focus Mode</h2>
+        <p class="description">Start your productivity session.</p>
+      </div>
 
-    <div class="widget" id="daily-quest">
-      <h2>Daily Quest</h2>
-      <p class="description">What is today's agenda?</p>
-    </div>
+      <div class="widget" id="daily-quest" tabindex="0" role="button">
+        <h2>Daily Quest</h2>
+        <p class="description">What is today's agenda?</p>
+      </div>
 
-    <div class="widget" id="mood-logger">
-      <h2>Mood Logger</h2>
-      <p class="description">How do you feel?</p>
-    </div>
+      <div class="widget" id="mood-logger" tabindex="0" role="button">
+        <h2>Mood Logger</h2>
+        <p class="description">How do you feel?</p>
+      </div>
 
-    <div class="widget" id="Talk">
-      <h2>Talk</h2>
-      <p class="description">Talk to Igris</p>
-    </div>
+      <div class="widget" id="talk" tabindex="0" role="button">
+        <h2>Talk</h2>
+        <p class="description">Talk to Igris</p>
+      </div>
 
-    <div class="widget" id="battle-log">
-      <h2>Battle log</h2>
-      <p class="description">Log interuptions with reasons and get solutions.</p>
-    </div>
-
-  </div>
+      <div class="widget" id="battle-log" tabindex="0" role="button">
+        <h2>Battle Log</h2>
+        <p class="description">Log interruptions with reasons and get solutions.</p>
+      </div>
+    </section>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>

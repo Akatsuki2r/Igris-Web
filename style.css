@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}  
+}
 
 /* Body */
 body {
@@ -12,7 +12,7 @@ body {
   font-family: 'Orbitron', sans-serif;
   background: linear-gradient(135deg, #000000, #0a0e41, #010030);
   background-size: 200% 200%;
-  animation: gradientShift 10s ease infinite;
+  animation: gradientShift 10s ease infinite; /* Now properly defined below */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,25 +21,22 @@ body {
   color: #e0f7ff;
 }
 
-
 #homepage-container {
   text-align: center;
 }
 
-
-
 /* IGRIS Title */
 .igris-name {
   color: #e0f7ff;
-  font-size: 6rem;
+  font-size: clamp(3rem, 8vw, 6rem); /* Responsive font size */
   text-align: center;
   text-shadow:
     0 0 5px #a44aff94,
     0 0 15px #0099ff,
     0 0 30px #00ccff54,
     0 0 50px #3366ff;
+  animation: flicker 3s ease-in-out infinite;
 }
-
 
 /* Start Button */
 .arise-btn {
@@ -53,15 +50,22 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   animation: fadeIn 3s ease-in-out forwards;
-  
 }
 
-.arise-btn:hover {
+.arise-btn:hover,
+.arise-btn:focus {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgb(131, 115, 136);
+  box-shadow: 0 0 20px rgb(15, 187, 230);
+
 }
 
-/* Animations */
+/* Fixed and added missing animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @keyframes flicker {
   0% { opacity: 1; text-shadow: 0 0 10px #4d1e1e55; }
   50% { opacity: 0.9; text-shadow: 0 0 30px #47250eaa; }
@@ -90,6 +94,17 @@ body {
   }
 }
 
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 #hud-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -105,7 +120,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12x);
+  -webkit-backdrop-filter: blur(12px); /* Fixed typo: was 12x */
   padding: 20px;
   color: #e8f0ff;
   text-shadow: 0 0 5px rgb(71, 169, 207);
@@ -113,45 +128,58 @@ body {
   text-align: center;
   box-shadow: 0 0 12px rgba(39, 24, 65, 0.3);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-
-
-.widget:hover {
-  color: #2da2aa;
+.widget:hover,
+.widget:focus {
+  color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(195, 0, 255, 0.5);
+  box-shadow: 0 0 20px rgb(8, 148, 230);
+
 }
 
-.description {
-  display: none;
+/* Fully hides an element */
+.hidden {
+  display: none !important;
 }
 
-/* Initial state: welcome screen is fully visible */
+/* Fade out transition */
 .fade-out {
   opacity: 1;
   transition: opacity 0.8s ease;
 }
 
-/* After fade-out + timeout: make it invisible and untouchable */
-.hide {
+.fade-out.hide {
   opacity: 0;
   pointer-events: none;
 }
 
-/* Keyframes for HUD fade in + slide up effect */
-@keyframes fadeInSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+/* Fade-in + slide-up animation */
+.fade-in {
+  animation: fadeInSlideUp 1s ease forwards;
+  opacity: 0;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .arise-btn {
+    margin-top: 3rem;
+    padding: 12px 30px;
+    font-size: 1.1rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  #hud-container {
+    padding: 20px;
+    grid-template-columns: 1fr;
   }
 }
 
-/* HUD fade-in effect using animation */
-.fade-in {
-  animation: fadeInSlideUp 1s ease forwards;
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
