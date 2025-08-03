@@ -1,15 +1,13 @@
-Igris-Web/
-│
-├── backend/
-│   ├── app/
-│   │   ├── main.py            # Entry point for FastAPI
-│   │   ├── api/               # All routes (e.g., /generate-token)
-│   │   │   └── livekit.py     # Token generator or calls
-│   │   ├── core/              # Settings, config (e.g., LiveKit keys)
-│   │   │   └── config.py
-│   │   └── services/          # Logic layer (e.g., LiveKit SDK handling)
-│   │       └── livekit_service.py
-│   └── requirements.txt       # All needed packages
-│
-└── README.md (optional)
-
+igris-backend/
+├── app/
+│   ├── main.py           ← FastAPI entrypoint
+│   ├── core/
+│   │   └── config.py     ← settings, environment
+│   ├── api/
+│   │   └── routes.py     ← your single POST endpoint for now
+│   ├── services/
+│   │   └── brain.py      ← prompt + response logic
+│   └── memory/
+│       └── memory.json   ← local JSON memory storage (we’ll build this out)
+├── requirements.txt      ← Python dependencies
+└── README.md             ← Optional docs
