@@ -1,8 +1,7 @@
 from fastapi import FastAPI
-import uvicorn
 
 app = FastAPI()
 
 @app.get('/')
-async def hi():
-    return {'Igris awakened'}
+async def hello():
+    return 'Sup'

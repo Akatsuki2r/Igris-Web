@@ -27,3 +27,5 @@ function handleAriseClick() {
   }, 800); // matches CSS transition time
 }
 
+
+
