@@ -183,3 +183,20 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+#focus {
+  display: block; /* or flex/grid depending on what you want */
+  width: 100%;
+  height: 100%;
+}
+
+#focus-screen {
+  display: none;
+}
+
+#focus-screen.fade-in {
+  display: flex; /* or block */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
