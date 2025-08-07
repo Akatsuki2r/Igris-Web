@@ -2,16 +2,15 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-on_focus = False
-off_focus = True
+is_focus_on = False# This is a bit more practical as we are dealing with only one state change for both on and off.
 
 
 
 @router.post('/focus/start')
 async def start_focus():
-    global on_focus
-    if on_focus == False:
-        on_focus = True
+    global is_focus_on
+    if is_focus_on == False:
+        is_focus_on = True
         print("Timer has been started")
     else : 
         print("Error")
@@ -30,8 +29,8 @@ PUT / PATCH means: "I want to update something."""
 @router.post('/focus/stop')
 async def stop_focus():
     global off_focus
-    if off_focus == True:
-        off_focus = False
+    if is_focus_on == True:
+        is_focus_on = False
         print("focus off")
     else : 
         print("Error")
