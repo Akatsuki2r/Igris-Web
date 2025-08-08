@@ -30,7 +30,7 @@ function handleAriseClick() {
 
 const focus_widget = document.getElementById("focus-mode");
 const focus_screen = document.getElementById("focus-screen");
-
+const back_btn = document.getElementById("back_btn")
 // Error handling
 if (!focus_widget || !focus_screen || !hud) {
   console.error("Required elements not found");
@@ -38,35 +38,22 @@ if (!focus_widget || !focus_screen || !hud) {
   focus_widget.addEventListener("click", handleWidgetClick);
 }
 
+// When clicking the widget
 function handleWidgetClick() {
-  hud.classList.add("fade-out", "hide");
+  hud.classList.add("hidden");
 
-  setTimeout(() => {
-    hud.classList.add("hidden");
-
-    const focusContainer = document.getElementById("focus");
-    focusContainer.style.display = "block"; // 👈 Show the section
-
-    focus_screen.classList.remove("hidden");
-    void focus_screen.offsetWidth;
-    focus_screen.classList.add("fade-in");
-  }, 800);
+  const focusContainer = document.getElementById("focus");
+  focusContainer.style.display = "block";
+  focus_screen.classList.remove("hidden");
 }
 
-const back_btn = document.getElementById("back_btn");
-
+// When clicking the back button
 back_btn.addEventListener("click", () => {
-  focus_screen.classList.add("fade-out", "hide");
+  focus_screen.classList.add("hidden");
 
-  setTimeout(() => {
-    focus_screen.classList.add("hidden");
-    focus_screen.classList.remove("fade-in");
+  const focusContainer = document.getElementById("focus");
+  focusContainer.style.display = "none";
 
-    const focusContainer = document.getElementById("focus");
-    focusContainer.style.display = "none"; // 👈 hide the focus section
-
-    hud.classList.remove("hidden");
-    void hud.offsetWidth;
-    hud.classList.add("fade-in");
-  }, 800);
+  hud.classList.remove("hidden");
 });
+
