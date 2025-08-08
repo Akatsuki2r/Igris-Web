@@ -8,6 +8,7 @@ if (!button || !welcome || !hud) {
 } else {
   button.addEventListener("click", handleAriseClick);
 }
+// Arise to hud logic
 
 function handleAriseClick() {
   // Step 1: Trigger fade-out animation
@@ -27,6 +28,7 @@ function handleAriseClick() {
   }, 800); // matches CSS transition time
 }
 
+//
 
 const focus_widget = document.getElementById("focus-mode");
 const focus_screen = document.getElementById("focus-screen");
