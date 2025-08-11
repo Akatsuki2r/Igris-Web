@@ -45,18 +45,44 @@
       </div>
     </section>
   </main>
+
   <section id="focus">
+
     <div class="focus-screen" id="focus-screen">
-      <p class="timer-display" id="timer-display">25:00</p>
+      <h1 class="Pomodoro-title" id="Pomodoro-title">⏲ Pomodoro Timer</h1>
+
+      <div class="button-container">
+        <button class="button" id="pomodoro-session">Pomodoro</button>
+        <button class="button" id="short-break">Short Break</button>
+        <button class="button" id="long-break">Long Break</button>
+      </div>
+
+      <div class="timer-display" id="pomodoro-timer" data-duration="25.00">
+        <h1 class="time">25:00</h1>
+      </div>
+
+      <div class="timer-display" id="short-timer" data-duration="5.00">
+        <h1 class="time">5:00</h1>
+      </div>
+
+      <div class="timer-display" id="long-timer" data-duration="10.00">
+        <h1 class="time">10:00</h1>
+      </div>
+
       <div id="focus_buttons">
+
         <button id="start_btn" class="Start_btn">Start</button>
         <button class="Stop_btn" id="stop_btn">Stop</button>
-        <button class="Back_btn" id="back_btn">Back</button>
+        <button class="Skip_btn" id="skip_btn">Skip</button>
+
       </div>
-      <h1>Start your session with the Focus feature </h1>
+      <button class="Back_btn" id="back_btn">Back</button>
+
     </div>
+
   </section>
+
+  
   <script src="script.js"></script>
-  <script src="scripts/focus.js"></script>
 </body>
 </html>

@@ -139,7 +139,7 @@ body {
   color: #ffeaea;
   font-size: 1.2rem;
   text-align: center;
-  box-shadow: 0 0 10px rgba(238, 11, 11, 0.25);
+
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -148,7 +148,7 @@ body {
 .widget:focus {
   color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(252, 1, 1, 0.8);
+  box-shadow: 0 0 35px rgb(30, 26, 97);
 }
 
 /* Fully hides an element */
@@ -205,3 +205,4 @@ body {
 .focus-screen {
  text-align: center; 
 }
+
