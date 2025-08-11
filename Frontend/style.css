@@ -33,10 +33,10 @@ body {
   font-size: clamp(3rem, 8vw, 6rem);
   text-align: center;
   text-shadow:
-    0 0 10px #5e1d1d,
-    0 0 30px #8b0000,
-    0 0 50px #ff000025,
-    0 0 80px #300000;
+    0 0 10px #664f4f,
+    0 0 30px #f0dcdc,
+    0 0 50px #72454525,
+    0 0 80px #df5e5e;
   animation: flicker 4s ease-in-out infinite;
 }
 
@@ -130,17 +130,16 @@ body {
 
 /* Widgets */
 .widget {
-  background: rgba(255, 255, 255, 0.02); /* Ultra transparent */
+  background: rgba(75, 18, 18, 0.02); /* Ultra transparent */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 20px;
   color: #ffeaea;
-  text-shadow: 0 0 6px rgba(255, 66, 66, 0.4);
   font-size: 1.2rem;
   text-align: center;
-  box-shadow: 0 0 10px rgba(88, 0, 0, 0.25);
+  box-shadow: 0 0 10px rgba(238, 11, 11, 0.25);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -149,7 +148,7 @@ body {
 .widget:focus {
   color: #ffffff;
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255, 33, 33, 0.8);
+  box-shadow: 0 0 25px rgba(252, 1, 1, 0.8);
 }
 
 /* Fully hides an element */
@@ -201,4 +200,8 @@ body {
   display: none; /* Hide entire section by default */
   width: 100%;
   height: 100%;
+}
+
+.focus-screen {
+ text-align: center; 
 }
