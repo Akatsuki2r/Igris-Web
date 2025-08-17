@@ -88,7 +88,7 @@ function setActiveTimer(id) {
 }
 
 function setProgress(angleDeg) {
-  dot.style.background = `conic-gradient( ${angleDeg}deg, transparent ${angleDeg}deg)`;
+  dot.style.background = `conic-gradient(#fff ${angleDeg}deg, transparent ${angleDeg}deg)`;
 }
 
 function formatAndShow() {
@@ -105,20 +105,20 @@ function prime(durationSec, id) {
   clearInterval(countdown);
   preset = durationSec;
   totalTime = durationSec;
-  remainingTime = durationSec;
+  remainingTime = durationSec; // ✅ don’t reset later in startTimer
   setActiveTimer(id);
   formatAndShow();
   if (durationSec === 0) setProgress(0);
 }
 
-function startTimer(durationSec = preset) {
+function startTimer() {
   clearInterval(countdown);
-  totalTime = durationSec;
 
-  // If we were paused, continue from remainingTime; otherwise start fresh
-  if (remainingTime <= 0 || remainingTime > durationSec) {
-    remainingTime = durationSec;
+  // ✅ continue from remainingTime if > 0
+  if (remainingTime <= 0) {
+    remainingTime = preset;
   }
+  totalTime = preset;
   formatAndShow();
 
   countdown = setInterval(() => {
@@ -136,13 +136,13 @@ function startTimer(durationSec = preset) {
 
 // ----- wire up mode buttons -----
 document.getElementById('pomodoro-session').addEventListener('click', () => {
-  prime(25 * 60, 'pomodoro-timer');  // show 25:00, not running
+  prime(25 * 60, 'pomodoro-timer');  // 25 min
 });
 document.getElementById('short-break').addEventListener('click', () => {
-  prime(5 * 60, 'short-timer');      // show 05:00, not running
+  prime(5 * 60, 'short-timer');      // 5 min
 });
 document.getElementById('long-break').addEventListener('click', () => {
-  prime(10 * 60, 'long-timer');      // show 10:00, not running
+  prime(10 * 60, 'long-timer');      // 10 min
 });
 
 // ----- control buttons -----
@@ -160,3 +160,39 @@ window.addEventListener('load', () => {
   timerIds.forEach(id => document.getElementById(id).classList.remove('active'));
   prime(25 * 60, 'pomodoro-timer');
 });
+
+
+const body = document.body;
+const timerCircle = document.querySelector('.timer-circle');
+
+function setMode(mode) {
+  body.classList.remove("pomodoro", "short-break", "long-break");
+  timerCircle.classList.remove("pomodoro", "short-break", "long-break");
+
+  if (mode === "pomodoro") {
+    body.classList.add("pomodoro");
+    timerCircle.classList.add("pomodoro");
+    playSound("pomodoro");
+  } else if (mode === "short-break") {
+    body.classList.add("short-break");
+    timerCircle.classList.add("short-break");
+    playSound("short-break");
+  } else if (mode === "long-break") {
+    body.classList.add("long-break");
+    timerCircle.classList.add("long-break");
+    playSound("long-break");
+  }
+}
+
+function playSound(mode) {
+  let sound;
+  if (mode === "pomodoro") {
+    sound = new Audio("sounds/pomodoro.mp3");
+  } else if (mode === "short-break") {
+    sound = new Audio("sounds/short-break.mp3");
+  } else if (mode === "long-break") {
+    sound = new Audio("sounds/long-break.mp3");
+  }
+  sound.play();
+}
+
