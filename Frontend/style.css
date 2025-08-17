@@ -234,7 +234,10 @@ body {
   width: 15rem;
   background-color: transparent;
   border-radius: 50%;
-  display: inline-block;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid rgba(114, 62, 62, 0.315);
 }
 
@@ -247,4 +250,10 @@ body {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+
+.circle-container {
+  height: 17rem;
+  display: flex;
+  justify-content: center;
 }

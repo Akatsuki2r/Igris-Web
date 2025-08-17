@@ -1,8 +1,11 @@
 const button = document.getElementById("arise-button");
 const welcome = document.getElementById("homepage-container");
 const hud = document.getElementById("hud-container"); // Fixed: was missing # in querySelector
-
+const time =  Array.from(document.querySelectorAll('.time'))
+const start =  document.querySelector("#start_btn")
 // Error handling
+
+console.log(time);
 if (!button || !welcome || !hud) {
   console.error("Required elements not found");
 } else {
@@ -58,6 +61,25 @@ back_btn.addEventListener("click", () => {
 
   hud.classList.remove("hidden");
 });
+;
 
 
 
+const [time1,time2,time3] = time
+
+start.addEventListener('click', ()=> {
+  const minutes = 25
+  const seconds = new Date().getSeconds()
+  for (let sec = 60; sec < 60; sec--) {
+    console.log(sec);
+    
+  }
+  time1.innerHTML = `${minutes} : ${seconds}`
+})
+
+window.addEventListener('load', ()=> {
+
+  time2.style.display = 'none'
+  time3.style.display = 'none'
+
+})
