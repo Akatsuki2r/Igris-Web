@@ -1,198 +1,203 @@
-const button = document.getElementById("arise-button");
-const welcome = document.getElementById("homepage-container");
-const hud = document.getElementById("hud-container"); // Fixed: was missing # in querySelector
-const time =  Array.from(document.querySelectorAll('.time'))
-const start =  document.querySelector("#start_btn")
-// Error handling
+// DOM Elements
+const elements = {
+  button: document.getElementById("arise-button"),
+  welcome: document.getElementById("homepage-container"),
+  hud: document.getElementById("hud-container"),
+  timeElements: Array.from(document.querySelectorAll('.time')),
+  startButton: document.querySelector("#start_btn"),
+  focusWidget: document.getElementById("focus-mode"),
+  focusScreen: document.getElementById("focus-screen"),
+  backButton: document.getElementById("back_btn"),
+  dot: document.querySelector('.dot'),
+  timerCircle: document.querySelector('.timer-circle'),
+  body: document.body
+};
 
-console.log(time);
-if (!button || !welcome || !hud) {
-  console.error("Required elements not found");
-} else {
-  button.addEventListener("click", handleAriseClick);
+// Timer State
+const timerState = {
+  interval: null,
+  timeLeft: 25 * 60,
+  activeTimer: 'pomodoro-timer',
+  timerIds: ['pomodoro-timer', 'short-timer', 'long-timer'],
+  remainingTime: 25 * 60,
+  totalTime: 25 * 60,
+  preset: 25 * 60
+};
+
+// Constants
+const TRANSITION_DURATION = 800; // matches CSS transition time
+
+// Error Handling
+function checkRequiredElements() {
+  const requiredElements = [
+    elements.button, elements.welcome, elements.hud,
+    elements.focusWidget, elements.focusScreen
+  ];
+  
+  if (requiredElements.some(el => !el)) {
+    console.error("Required elements not found");
+    return false;
+  }
+  return true;
 }
-// Arise to hud logic
 
+// Animation Functions
+function fadeOut(element) {
+  element.classList.add("fade-out", "hide");
+}
+
+function fadeIn(element) {
+  element.classList.remove("hidden");
+  void element.offsetWidth; // Force reflow
+  element.classList.add("fade-in");
+}
+
+// Screen Transitions
 function handleAriseClick() {
-  // Step 1: Trigger fade-out animation
-  welcome.classList.add("fade-out", "hide");
-
-  // Step 2: Wait for fade to finish
+  fadeOut(elements.welcome);
+  
   setTimeout(() => {
-    // Fully hide the welcome screen
-    welcome.classList.add("hidden");
-
-    // Make HUD visible
-    hud.classList.remove("hidden");
-    // Force a reflow to restart animation
-    void hud.offsetWidth;
-    // Trigger fade-in animation
-    hud.classList.add("fade-in");
-  }, 800); // matches CSS transition time
+    elements.welcome.classList.add("hidden");
+    fadeIn(elements.hud);
+  }, TRANSITION_DURATION);
 }
 
-//
-
-const focus_widget = document.getElementById("focus-mode");
-const focus_screen = document.getElementById("focus-screen");
-const back_btn = document.getElementById("back_btn")
-// Error handling
-if (!focus_widget || !focus_screen || !hud) {
-  console.error("Required elements not found");
-} else {
-  focus_widget.addEventListener("click", handleWidgetClick);
-}
-
-// When clicking the widget
 function handleWidgetClick() {
-  hud.classList.add("hidden");
-
-  const focusContainer = document.getElementById("focus");
-  focusContainer.style.display = "block";
-  focus_screen.classList.remove("hidden");
+  elements.hud.classList.add("hidden");
+  document.getElementById("focus").style.display = "block";
+  fadeIn(elements.focusScreen);
 }
 
-// When clicking the back button
-back_btn.addEventListener("click", () => {
-  focus_screen.classList.add("hidden");
+function handleBackClick() {
+  elements.focusScreen.classList.add("hidden");
+  document.getElementById("focus").style.display = "none";
+  fadeIn(elements.hud);
+}
 
-  const focusContainer = document.getElementById("focus");
-  focusContainer.style.display = "none";
-
-  hud.classList.remove("hidden");
-});
-;
-
-
-
-// ----- Progress + countdown state -----
-let countdown = null;
-let totalTime = 0;
-let remainingTime = 0;
-let preset = 25 * 60; // default mode
-let activeId = 'pomodoro-timer';
-let timeEl = null;
-
-const dot = document.querySelector('.dot');
-const timerIds = ['pomodoro-timer', 'short-timer', 'long-timer'];
-
-// ----- helpers -----
+// Timer Functions
 function setActiveTimer(id) {
-  activeId = id;
-  timerIds.forEach(tid => {
+  timerState.activeId = id;
+  timerState.timerIds.forEach(tid => {
     const el = document.getElementById(tid);
-    if (!el) return;
-    el.classList.toggle('active', tid === id);
+    if (el) el.classList.toggle('active', tid === id);
   });
-  timeEl = document.querySelector(`#${id} .time`);
+  timerState.timeEl = document.querySelector(`#${id} .time`);
 }
 
 function setProgress(angleDeg) {
-  dot.style.background = `conic-gradient(#fff ${angleDeg}deg, transparent ${angleDeg}deg)`;
+  elements.dot.style.background = `conic-gradient(#fff ${angleDeg}deg, transparent ${angleDeg}deg)`;
 }
 
-function formatAndShow() {
-  const m = Math.floor(remainingTime / 60);
-  const s = remainingTime % 60;
-  if (timeEl) timeEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
 
-  const progress = totalTime ? ((totalTime - remainingTime) / totalTime) * 360 : 0;
+function updateTimerDisplay() {
+  if (timerState.timeEl) {
+    timerState.timeEl.textContent = formatTime(timerState.remainingTime);
+  }
+  
+  const progress = timerState.totalTime 
+    ? ((timerState.totalTime - timerState.remainingTime) / timerState.totalTime) * 360 
+    : 0;
   setProgress(progress);
 }
 
-// Prepare a mode without starting it
-function prime(durationSec, id) {
-  clearInterval(countdown);
-  preset = durationSec;
-  totalTime = durationSec;
-  remainingTime = durationSec; // ✅ don’t reset later in startTimer
-  setActiveTimer(id);
-  formatAndShow();
-  if (durationSec === 0) setProgress(0);
-}
-
 function startTimer() {
-  clearInterval(countdown);
-
-  // ✅ continue from remainingTime if > 0
-  if (remainingTime <= 0) {
-    remainingTime = preset;
+  clearInterval(timerState.interval);
+  
+  if (timerState.remainingTime <= 0) {
+    timerState.remainingTime = timerState.preset;
   }
-  totalTime = preset;
-  formatAndShow();
-
-  countdown = setInterval(() => {
-    remainingTime--;
-    if (remainingTime < 0) {
-      clearInterval(countdown);
-      remainingTime = 0;
-      formatAndShow();
-      alert("Time’s up!");
+  timerState.totalTime = timerState.preset;
+  updateTimerDisplay();
+  
+  timerState.interval = setInterval(() => {
+    timerState.remainingTime--;
+    if (timerState.remainingTime < 0) {
+      clearInterval(timerState.interval);
+      timerState.remainingTime = 0;
+      updateTimerDisplay();
+      alert("Time's up!");
       return;
     }
-    formatAndShow();
+    updateTimerDisplay();
   }, 1000);
 }
 
-// ----- wire up mode buttons -----
-document.getElementById('pomodoro-session').addEventListener('click', () => {
-  prime(25 * 60, 'pomodoro-timer');  // 25 min
-});
-document.getElementById('short-break').addEventListener('click', () => {
-  prime(5 * 60, 'short-timer');      // 5 min
-});
-document.getElementById('long-break').addEventListener('click', () => {
-  prime(10 * 60, 'long-timer');      // 10 min
-});
+function prime(durationSec, id) {
+  clearInterval(timerState.interval);
+  timerState.preset = durationSec;
+  setActiveTimer(id);
+  timerState.remainingTime = durationSec;
+  updateTimerDisplay();
+}
 
-// ----- control buttons -----
-document.getElementById('start_btn').addEventListener('click', () => startTimer());
-document.getElementById('stop_btn').addEventListener('click', () => clearInterval(countdown)); // pause
-document.getElementById('skip_btn').addEventListener('click', () => {
-  clearInterval(countdown);
-  remainingTime = 0;
-  formatAndShow();
-});
-
-// ----- init -----
-window.addEventListener('load', () => {
-  // Hide all, show pomodoro as the active one with 25:00
-  timerIds.forEach(id => document.getElementById(id).classList.remove('active'));
-  prime(25 * 60, 'pomodoro-timer');
-});
-
-
-const body = document.body;
-const timerCircle = document.querySelector('.timer-circle');
-
+// Mode Functions
 function setMode(mode) {
-  body.classList.remove("pomodoro", "short-break", "long-break");
-  timerCircle.classList.remove("pomodoro", "short-break", "long-break");
-
-  if (mode === "pomodoro") {
-    body.classList.add("pomodoro");
-    timerCircle.classList.add("pomodoro");
-    playSound("pomodoro");
-  } else if (mode === "short-break") {
-    body.classList.add("short-break");
-    timerCircle.classList.add("short-break");
-    playSound("short-break");
-  } else if (mode === "long-break") {
-    body.classList.add("long-break");
-    timerCircle.classList.add("long-break");
-    playSound("long-break");
+  const modes = ["pomodoro", "short-break", "long-break"];
+  
+  modes.forEach(m => {
+    elements.body.classList.remove(m);
+    elements.timerCircle.classList.remove(m);
+  });
+  
+  if (modes.includes(mode)) {
+    elements.body.classList.add(mode);
+    elements.timerCircle.classList.add(mode);
+    playSound(mode);
   }
 }
 
 function playSound(mode) {
-  let sound;
-  if (mode === "pomodoro") {
-    sound = new Audio("sounds/pomodoro.mp3");
-  } else if (mode === "short-break") {
-    sound = new Audio("sounds/short-break.mp3");
-  } else if (mode === "long-break") {
-    sound = new Audio("sounds/long-break.mp3");
+  const sounds = {
+    "pomodoro": "sounds/pomodoro.mp3",
+    "short-break": "sounds/short-break.mp3",
+    "long-break": "sounds/long-break.mp3"
+  };
+  
+  if (sounds[mode]) {
+    new Audio(sounds[mode]).play();
   }
-  sound.play();
 }
 
+// Event Listeners
+function initializeEventListeners() {
+  if (!checkRequiredElements()) return;
+  
+  elements.button.addEventListener("click", handleAriseClick);
+  elements.focusWidget.addEventListener("click", handleWidgetClick);
+  elements.backButton.addEventListener("click", handleBackClick);
+  
+  // Timer controls
+  document.getElementById('pomodoro-session').addEventListener('click', () => {
+    prime(25 * 60, 'pomodoro-timer');
+    setMode("pomodoro");
+  });
+  document.getElementById('short-break').addEventListener('click', () => {
+    prime(5 * 60, 'short-timer');
+    setMode("short-break");
+  });
+  document.getElementById('long-break').addEventListener('click', () => {
+    prime(10 * 60, 'long-timer');
+    setMode("long-break");
+  });
+  
+  elements.startButton.addEventListener('click', startTimer);
+  document.getElementById('stop_btn').addEventListener('click', () => clearInterval(timerState.interval));
+  document.getElementById('skip_btn').addEventListener('click', () => {
+    clearInterval(timerState.interval);
+    timerState.remainingTime = 0;
+    updateTimerDisplay();
+  });
+}
+
+// Initialize
+window.addEventListener('load', () => {
+  initializeEventListeners();
+  timerState.timerIds.forEach(id => document.getElementById(id)?.classList.remove('active'));
+  prime(25 * 60, 'pomodoro-timer');
+  setMode("pomodoro");
+});
