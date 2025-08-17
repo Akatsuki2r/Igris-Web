@@ -16,7 +16,6 @@ const elements = {
 // Timer State
 const timerState = {
   interval: null,
-  timeLeft: 25 * 60,
   activeTimer: 'pomodoro-timer',
   timerIds: ['pomodoro-timer', 'short-timer', 'long-timer'],
   remainingTime: 25 * 60,
@@ -76,12 +75,11 @@ function handleBackClick() {
 
 // Timer Functions
 function setActiveTimer(id) {
-  timerState.activeId = id;
+  timerState.activeTimer = id;
   timerState.timerIds.forEach(tid => {
     const el = document.getElementById(tid);
     if (el) el.classList.toggle('active', tid === id);
   });
-  timerState.timeEl = document.querySelector(`#${id} .time`);
 }
 
 function setProgress(angleDeg) {
@@ -95,8 +93,9 @@ function formatTime(seconds) {
 }
 
 function updateTimerDisplay() {
-  if (timerState.timeEl) {
-    timerState.timeEl.textContent = formatTime(timerState.remainingTime);
+  const activeTimerElement = document.querySelector(`#${timerState.activeTimer} .time`);
+  if (activeTimerElement) {
+    activeTimerElement.textContent = formatTime(timerState.remainingTime);
   }
   
   const progress = timerState.totalTime 
@@ -110,7 +109,9 @@ function startTimer() {
   
   if (timerState.remainingTime <= 0) {
     timerState.remainingTime = timerState.preset;
+    setProgress(0);
   }
+  
   timerState.totalTime = timerState.preset;
   updateTimerDisplay();
   
@@ -120,6 +121,7 @@ function startTimer() {
       clearInterval(timerState.interval);
       timerState.remainingTime = 0;
       updateTimerDisplay();
+      setProgress(360);
       alert("Time's up!");
       return;
     }
@@ -127,11 +129,23 @@ function startTimer() {
   }, 1000);
 }
 
+function stopTimer() {
+  clearInterval(timerState.interval);
+}
+
+function skipTimer() {
+  clearInterval(timerState.interval);
+  timerState.remainingTime = timerState.preset;
+  setProgress(0);
+  updateTimerDisplay();
+}
+
 function prime(durationSec, id) {
   clearInterval(timerState.interval);
   timerState.preset = durationSec;
-  setActiveTimer(id);
   timerState.remainingTime = durationSec;
+  timerState.totalTime = durationSec;
+  setActiveTimer(id);
   updateTimerDisplay();
 }
 
@@ -186,12 +200,8 @@ function initializeEventListeners() {
   });
   
   elements.startButton.addEventListener('click', startTimer);
-  document.getElementById('stop_btn').addEventListener('click', () => clearInterval(timerState.interval));
-  document.getElementById('skip_btn').addEventListener('click', () => {
-    clearInterval(timerState.interval);
-    timerState.remainingTime = 0;
-    updateTimerDisplay();
-  });
+  document.getElementById('stop_btn').addEventListener('click', stopTimer);
+  document.getElementById('skip_btn').addEventListener('click', skipTimer);
 }
 
 // Initialize
