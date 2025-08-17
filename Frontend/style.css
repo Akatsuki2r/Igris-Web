@@ -241,6 +241,17 @@ body {
   border: 1px solid rgba(114, 62, 62, 0.315);
 }
 
+/* Make the text sit centered over the ring, and hide non-active displays */
+.dot { position: relative; }
+.timer-display {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  display: none; /* hidden by default */
+}
+.timer-display.active { display: block; }
+
+
 .focus-buttons {
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -257,3 +268,4 @@ body {
   display: flex;
   justify-content: center;
 }
+
