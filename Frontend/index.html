@@ -1,93 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Igris Core</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/dist/output.css">
+  <title>Document</title>
 </head>
 <body>
-  <main>
-    <section id="welcome-screen" aria-label="Welcome screen">
-      <div id="homepage-container">  
-        <h1 class="igris-name" aria-label="Igris">IGRIS</h1>
-        <button class="arise-btn" id="arise-button" aria-label="Start Igris interface">
-          Arise
-        </button>
-      </div>
-    </section>
-
-    <section class="hidden" id="hud-container" aria-label="Main dashboard">
-      <div class="widget" id="focus-mode" tabindex="0" role="button">
-        <h2>Focus Mode</h2>
-        <p class="description">Start your productivity session.</p>
-      </div>
-
-      <div class="widget" id="daily-quest" tabindex="0" role="button">
-        <h2>Daily Quest</h2>
-        <p class="description">What is today's agenda?</p>
-      </div>
-
-      <div class="widget" id="mood-logger" tabindex="0" role="button">
-        <h2>Mood Logger</h2>
-        <p class="description">How do you feel?</p>
-      </div>
-
-      <div class="widget" id="talk" tabindex="0" role="button">
-        <h2>Talk</h2>
-        <p class="description">Talk to Igris</p>
-      </div>
-
-      <div class="widget" id="battle-log" tabindex="0" role="button">
-        <h2>Battle Log</h2>
-        <p class="description">Log interruptions with reasons and get solutions.</p>
-      </div>
-    </section>
-  </main>
-
-  <section id="focus">
-
-    <div class="focus-screen" id="focus-screen">
-      <h1 class="Pomodoro-title" id="Pomodoro-title">⏲ Pomodoro Timer</h1>
-
-      <div class="button-container">
-        <button class="button" id="pomodoro-session">Pomodoro</button>
-        <button class="button" id="short-break">Short Break</button>
-        <button class="button" id="long-break">Long Break</button>
-      </div>
-      <div class="circle-container">
-     <div class="dot">
-        <div class="timer-display" id="pomodoro-timer" data-duration="25.00">
-            <h1 class="time">25:00</h1>
-        </div>
-
-        <div class="timer-display" id="short-timer" data-duration="5.00">
-          <h1 class="time">5:00</h1>
-        </div>
-
-        <div class="timer-display" id="long-timer" data-duration="10.00">
-          <h1 class="time">10:00</h1>
-        </div>
-
-      </div>    
-      </div>
-    
-
-      <div id="focus-buttons">
-
-        <button id="start_btn" class="Start_btn">Start</button>
-        <button class="Stop_btn" id="stop_btn">Stop</button>
-        <button class="Skip_btn" id="skip_btn">Skip</button>
-
-      </div>
-      <button class="Back_btn" id="back_btn">Back</button>
-
-    </div>
-
-  </section>
-
   
-  <script src="script.js"></script>
 </body>
 </html>

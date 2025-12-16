@@ -1,0 +1,25 @@
+{
+  "name": "igris-web",
+  "version": "1.0.0",
+  "description": "Igris is an assistant made to ensure productivity with a variety of features ranging from pomodoro timers to log books helping users beat procrastination",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akatsuki2r/Igris-Web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Akatsuki2r/Igris-Web/issues"
+  },
+  "homepage": "https://github.com/Akatsuki2r/Igris-Web#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwindcss": "^4.1.18"
+  }
+}
