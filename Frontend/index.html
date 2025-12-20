@@ -3,27 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Igris</title>
   </head>
   <body>
 
-    <nav>
-      <span>
-        <img id="profile-picture" src="Assets/user.png" alt="profile">
-      </span>
-      <span>
-        <img src="Assets/dots.png" alt="menu" srcset="">
-      </span>
-    </nav>
 
     <main>
-
-      <h1 id="Greeting-text">'still empty need to work on'</h1> <!-- this will be in the js to change based on shit --> 
-      <div class="input1-container">
-        <textarea id="text-input1" rows="1" placeholder="awaiting your command sir"></textarea>
-        <button id="input1-submit-button">Submit</button>
+      <div id="igris-output-container" class="hidden">
+        <p id="Igris-output">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, veniam. Impedit adipisci veniam vel laborum laboriosam delectus architecto consequatur excepturi quisquam, voluptate quo molestias veritatis quae autem harum expedita vitae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius voluptatem tempore neque nisi cumque perferendis fuga, fugit nesciunt error laudantium pariatur amet quidem reprehenderit totam quia saepe omnis suscipit laboriosam.
+        </p>
+      </div>
+      <div id="container1">
+        <h1 id="Greeting-text"></h1> <!-- this will be in the js to change based on stuff --> 
+        <div class="input1-container">
+          <textarea id="text-input1" rows="1" placeholder=" awaiting your command Sir"></textarea>
+          <button id="input1-submit-button" >Submit</button>
+        </div>
+      
       </div>
     </main>
-
+    
+    <script src="script.js"></script>
   </body>
+  
 </html>
