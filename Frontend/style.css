@@ -71,12 +71,12 @@ main {
 .igris-afterclick {
   width: 60%;
   height: fit-content;
-  color: grey;
+  background-color: grey;
   display: flex;
   align-items: center;
   
 }
 
 .hidden {
-  opacity: 0;
+  display: none;
 }
