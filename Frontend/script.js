@@ -39,11 +39,11 @@ SubmitButton1.addEventListener("click", () => {
   fetch("http://127.0.0.1:8001/command", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ command: content }),
+    body: JSON.stringify({ reply: content }),
   })
     .then((res) => res.json())
     .then((data) => {
-      IgrisReply.textContent = data.command;
+      IgrisReply.textContent = data.reply;//.what comes after data. is based on what is the parameter of the pydantic model
     })
     .catch((err) => console.error(err));
 });

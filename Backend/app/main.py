@@ -14,7 +14,7 @@ app.add_middleware(
 )
 
 class Reply(BaseModel):
-    command: str
+    reply: str
     
 temp_memory = []
 
@@ -23,8 +23,12 @@ temp_memory = []
 async def command(rep: Reply):
     if len(temp_memory) > 20:
         temp_memory.pop(0)
-    temp_memory.append(rep.command)
-    print(temp_memory)
-    return {"command": rep.command}
 
+    temp_memory.append(rep.reply)
 
+    thekeyword = rep.reply.casefold()
+
+    if "start focus" in thekeyword:
+        return {"reply": "Focus turning on"}
+    else:
+        return {"reply": "Specify your request"}
