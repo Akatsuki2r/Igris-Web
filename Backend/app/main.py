@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi.middleware.cors import CORSMiddleware
+import models 
+import services
 
 app = FastAPI()
 
@@ -13,22 +14,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-class Reply(BaseModel):
-    reply: str
-    
+
 temp_memory = []
 
 
 @app.post("/command")
-async def command(rep: Reply):
-    if len(temp_memory) > 20:
-        temp_memory.pop(0)
-
-    temp_memory.append(rep.reply)
-
-    thekeyword = rep.reply.casefold()
-
-    if "start focus" in thekeyword:
-        return {"reply": "Focus turning on"}
-    else:
-        return {"reply": "Specify your request"}
+async def command(rep: models.Reply):
+    reply_text = services.focus_keyword(rep.reply)
+    return {"reply": reply_text}
